@@ -147,7 +147,7 @@ h2{font-family:var(--display);font-size:clamp(30px,4vw,46px);line-height:1.1;let
 
 /* timeline */
 .timeline{position:relative;padding-left:28px}
-.timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),var(--line) 60%)}
+.timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--line)}
 .job{position:relative;padding-bottom:44px}
 .job:last-child{padding-bottom:0}
 .job::before{content:"";position:absolute;left:-28px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 5px var(--bg)}
@@ -238,14 +238,69 @@ footer{padding:40px 0 50px;color:var(--dim);font-size:13.5px}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:28px}
 footer .mono{font-family:var(--mono);font-size:12px}
 
+/* scroll progress */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:70;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--accent),var(--accent2));pointer-events:none}
+
+/* tech marquee */
+.marquee{margin-top:56px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee .track{display:flex;width:max-content;animation:marq 52s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee span{font-family:var(--mono);font-size:13px;letter-spacing:1px;color:var(--dim);white-space:nowrap;display:inline-flex;align-items:center}
+.marquee span::after{content:"";width:5px;height:5px;margin:0 26px;border-radius:50%;background:var(--accent);opacity:.55}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* AD loop diagram */
+.pipe-wrap{grid-column:1/-1;margin-top:8px}
+.pipe-cap{color:var(--muted);font-size:14.5px;margin:-4px 0 18px}
+.pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;list-style:none}
+.pnode{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:16px 14px;animation:lit 7.2s ease-in-out infinite;animation-delay:calc(var(--i) * 1.2s)}
+.pnode svg{width:26px;height:26px;color:var(--accent);margin-bottom:10px}
+.pnode b{display:block;font-family:var(--display);font-weight:600;font-size:15.5px}
+.pnode span{display:block;font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:3px;line-height:1.45}
+.pnode:not(:last-child)::after{content:"";position:absolute;top:50%;right:-15px;width:16px;height:2px;background:var(--line2)}
+.pnode:not(:last-child)::before{content:"";position:absolute;top:calc(50% - 2px);right:-14px;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);opacity:0;z-index:1;animation:hop 7.2s linear infinite;animation-delay:calc(var(--i) * 1.2s + .9s)}
+@keyframes lit{0%,22%,100%{border-color:var(--line);box-shadow:none}6%,14%{border-color:var(--accent);box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 30%,transparent),0 10px 30px -12px var(--accent)}}
+@keyframes hop{0%{opacity:0;transform:translateX(0)}1%{opacity:1}6%{opacity:1;transform:translateX(10px)}7%,100%{opacity:0;transform:translateX(10px)}}
+@media (max-width:860px){.pipe{grid-template-columns:repeat(3,1fr)}.pnode:nth-child(3n)::after,.pnode:nth-child(3n)::before{display:none}}
+@media (max-width:480px){.pipe{grid-template-columns:repeat(2,1fr);gap:12px}.pnode:nth-child(3n)::after,.pnode:nth-child(3n)::before{display:block}.pnode:nth-child(2n)::after,.pnode:nth-child(2n)::before{display:none}}
+
+/* timeline rail that fills as you scroll */
+.rail{position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),var(--accent2));transform-origin:top;transform:scaleY(var(--p,1));box-shadow:0 0 12px color-mix(in srgb,var(--accent) 60%,transparent)}
+.job::before{transition:background .4s,box-shadow .4s;z-index:1}
+.job.lit::before{background:var(--accent);box-shadow:0 0 0 5px var(--bg),0 0 18px var(--accent)}
+
+/* headings: words slide up */
+.js .split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.js .split .w>span{display:inline-block;transform:translateY(110%);animation:failsafe 0s 3.5s forwards}
+.js .in .split .w>span{transform:none;transition:transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d) * 60ms);animation:none}
+
+/* illustrated card media */
+.media svg{width:100%;height:100%;display:block}
+
+/* gold shine */
+.award .rank.gold{background:linear-gradient(100deg,var(--accent2) 20%,#fde68a 40%,#fff7d6 50%,#fde68a 60%,var(--accent2) 80%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;animation:shine 4.5s ease-in-out infinite}
+@keyframes shine{0%{background-position:100% 0}60%,100%{background-position:0 0}}
+
+/* contact orbit */
+.contact{position:relative;overflow:hidden}
+.contact>*{position:relative;z-index:1}
+.contact>.orbit{position:absolute;z-index:0;right:-150px;top:-150px;width:340px;height:340px;opacity:.75;pointer-events:none}
+@media (max-width:860px){.contact>.orbit{width:260px;height:260px;right:-120px;top:-120px;opacity:.45}}
+.orbit .sat{transform-origin:170px 170px;animation:spin 16s linear infinite}
+.orbit .sat2{transform-origin:170px 170px;animation:spin 28s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* reveal: hidden only while JS animates it; a CSS timer guarantees it shows even if scripts fail */
 .js .reveal{opacity:0;transform:translateY(24px);animation:failsafe 0s 3.5s forwards}
 .js .reveal.in{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);animation:none}
 @keyframes failsafe{to{opacity:1;transform:none}}
+/* once the observer is running, let reveals wait for scroll instead of the 3.5 s timer */
+.js.io .reveal:not(.in),.js.io .split .w>span{animation:none}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   .js .reveal{opacity:1;transform:none;animation:none}
   .scroll-cue i,.otw::before{animation:none}
+  .marquee .track,.pnode,.pnode::before,.orbit .sat,.orbit .sat2,.award .rank.gold{animation:none}
 }
 </style>
 </head>
@@ -255,6 +310,7 @@ document.documentElement.classList.add('js');
 try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
 </script>
 <div class="cursor-glow" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
   <div class="wrap">
@@ -313,6 +369,10 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
     <div class="stat"><div class="n"><span class="count" data-to="145" data-dec="0">145</span></div><div class="l">ODD elements turned into test scenarios</div></div>
   </div>
 </div>
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>CARLA</span><span>ROS 2</span><span>C++</span><span>Python</span><span>MATLAB / Simulink</span><span>LQR</span><span>Hybrid A*</span><span>EKF</span><span>Pose Graph SLAM</span><span>SOTIF</span><span>PEGASUS</span><span>Gazebo</span><span>PyTorch</span><span>Autoware</span><span>YOLOv8</span><span>Nav2</span><span>Docker</span>
+  <span>CARLA</span><span>ROS 2</span><span>C++</span><span>Python</span><span>MATLAB / Simulink</span><span>LQR</span><span>Hybrid A*</span><span>EKF</span><span>Pose Graph SLAM</span><span>SOTIF</span><span>PEGASUS</span><span>Gazebo</span><span>PyTorch</span><span>Autoware</span><span>YOLOv8</span><span>Nav2</span><span>Docker</span>
+</div></div>
 
 <section id="about">
   <div class="wrap about">
@@ -330,6 +390,18 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
       <div class="fact"><span>Stack</span><b>C++, Python, ROS 2, CARLA</b></div>
       <div class="fact"><span>Education</span><b>B.Tech EE, NIT Surat · Graduated 2026</b></div>
     </div>
+    <div class="pipe-wrap reveal">
+      <div class="kicker">// the loop I work on</div>
+      <p class="pipe-cap">From raw sensor data to a validated manoeuvre: I've built a piece of every block.</p>
+      <ol class="pipe">
+        <li class="pnode" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><path d="M7.5 7.5a6.4 6.4 0 000 9M16.5 7.5a6.4 6.4 0 010 9M4.6 4.6a10.5 10.5 0 000 14.8M19.4 4.6a10.5 10.5 0 010 14.8"/></svg><b>Sense</b><span>LiDAR · camera · IMU · GPS</span></li>
+        <li class="pnode" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="1.5"/></svg><b>Localize</b><span>EKF · pose-graph SLAM</span></li>
+        <li class="pnode" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 18c4 0 6-3 8-6s4-6 8-6M12 12c2 3 4 6 8 6"/><circle cx="4" cy="18" r="1.6"/></svg><b>Predict</b><span>agent trajectories</span></li>
+        <li class="pnode" style="--i:3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19V9a3 3 0 013-3h8"/><path d="M13 3l3 3-3 3"/><circle cx="5" cy="19" r="1.6"/></svg><b>Plan</b><span>behaviour · Hybrid A*</span></li>
+        <li class="pnode" style="--i:4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2"/><path d="M3.8 10.5h6.3M13.9 10.5h6.3M12 14v6"/></svg><b>Control</b><span>LQR · Stanley · PID</span></li>
+        <li class="pnode" style="--i:5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><b>Validate</b><span>SOTIF · scenarios · KPIs</span></li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -340,6 +412,7 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
       <h2>Where I've built things</h2>
     </div>
     <div class="timeline">
+      <span class="rail" aria-hidden="true"></span>
       <article class="job reveal">
         <div class="job-top"><h3>ADAS Developer · <span class="org">PEM Technologies</span></h3><span class="when">JUL 2026 – PRESENT · BANGALORE</span></div>
         <ul>
@@ -435,6 +508,24 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
           <a class="go" href="https://github.com/VyomVyas25/RL_Projects" target="_blank" rel="noopener">Code <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
       </article>
       <article class="card reveal" data-c="rover">
+        <div class="media"><svg class="anim-svg" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: a six-wheeled rover driving over rough terrain, its LiDAR sweeping and an arrow sign detected ahead">
+          <defs><linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07090d"/><stop offset="1" stop-color="#121a26"/></linearGradient>
+            <g id="oterr"><path d="M0 140 Q40 126 80 138 T160 134 T240 142 T320 140 V180 H0 Z" fill="#141c28"/><path d="M0 140 Q40 126 80 138 T160 134 T240 142 T320 140" fill="none" stroke="#f59e0b" stroke-opacity=".55" stroke-width="1.2"/>
+              <circle cx="40" cy="150" r="2" fill="#243044"/><circle cx="150" cy="158" r="3" fill="#243044"/><circle cx="270" cy="152" r="2.4" fill="#243044"/>
+              <line x1="236" y1="141" x2="236" y2="112" stroke="#5b6676" stroke-width="1.6"/><rect x="223" y="100" width="26" height="13" rx="2" fill="#e6ebf2"/><path d="M243 106.5h-14M233 102.5l-4 4 4 4" fill="none" stroke="#07090d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="219" y="96" width="34" height="21" rx="2" fill="none" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"><animate attributeName="opacity" values="1;.25;1" dur="1.4s" repeatCount="indefinite"/></rect>
+              <text x="219" y="92" font-family="JetBrains Mono,monospace" font-size="7" fill="#22d3ee">arrow</text></g></defs>
+          <rect width="320" height="180" fill="url(#osky)"/>
+          <g fill="#8b97a8"><circle cx="30" cy="22" r=".9"/><circle cx="88" cy="48" r=".7"/><circle cx="140" cy="16" r="1"/><circle cx="205" cy="38" r=".8"/><circle cx="262" cy="20" r="1.1"><animate attributeName="opacity" values="1;.2;1" dur="3s" repeatCount="indefinite"/></circle><circle cx="300" cy="60" r=".7"/><circle cx="58" cy="78" r=".6"/><circle cx="178" cy="70" r=".8"><animate attributeName="opacity" values=".2;1;.2" dur="2.4s" repeatCount="indefinite"/></circle></g>
+          <g><use href="#oterr"/><use href="#oterr" x="320"/><animateTransform attributeName="transform" type="translate" from="0 0" to="-320 0" dur="9s" repeatCount="indefinite"/></g>
+          <g><animateTransform attributeName="transform" type="translate" values="0 0;0 -1.6;0 0;0 1;0 0" dur="1.7s" repeatCount="indefinite"/>
+            <g transform="translate(118 97)"><g><line x1="0" y1="0" x2="70" y2="0" stroke="#22d3ee" stroke-opacity=".55" stroke-width="1"/><animateTransform attributeName="transform" type="rotate" values="-50;20;-50" dur="2.2s" repeatCount="indefinite"/></g></g>
+            <line x1="118" y1="98" x2="118" y2="113" stroke="#8b97a8" stroke-width="1.6"/><circle cx="118" cy="97" r="3" fill="#22d3ee"/>
+            <rect x="78" y="112" width="52" height="13" rx="3" fill="#0f141d" stroke="#22d3ee" stroke-width="1.4"/><rect x="84" y="115" width="14" height="5" rx="1" fill="#22d3ee" fill-opacity=".35"/>
+            <g fill="#0b0f15" stroke="#8b97a8" stroke-width="1.4"><circle cx="84" cy="131" r="6"/><circle cx="104" cy="131" r="6"/><circle cx="124" cy="131" r="6"/></g>
+            <g stroke="#8b97a8" stroke-width="1"><g transform="translate(84 131)"><path d="M-4 0h8M0-4v8"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" additive="sum" repeatCount="indefinite"/></g><g transform="translate(104 131)"><path d="M-4 0h8M0-4v8"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" additive="sum" repeatCount="indefinite"/></g><g transform="translate(124 131)"><path d="M-4 0h8M0-4v8"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" additive="sum" repeatCount="indefinite"/></g></g>
+          </g>
+        </svg><span class="badge">ILLUSTRATION · ROVER NAV</span></div>
         <div class="cat">Space robotics · ROS 2</div>
         <h3>ORION all-terrain rover</h3>
         <p>rclpy and rclcpp nodes for 2D LiDAR, GPS, IMU and webcam navigation, verified in Gazebo, with YOLOv8n detections fused with LiDAR depth for real-time arrow recognition and 5.8 GHz long-range comms.</p>
@@ -443,6 +534,21 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
           <a class="go" href="https://drive.google.com/file/d/1p-nHttkD6TvhloZKIVFj8w704kD424Q_/view?usp=drivesdk" target="_blank" rel="noopener">Photo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
       </article>
       <article class="card reveal" data-c="ad rover">
+        <div class="media"><svg class="anim-svg" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: a small autonomous car following a track line with its camera field of view and a spinning LiDAR beam">
+          <defs><path id="nxp" d="M80 40 H240 C292 40 292 140 240 140 H200 C178 140 174 108 160 108 C146 108 142 140 120 140 H80 C28 140 28 40 80 40 Z"/>
+            <pattern id="ngrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#1a2230" stroke-width=".6"/></pattern></defs>
+          <rect width="320" height="180" fill="#0b0f15"/><rect width="320" height="180" fill="url(#ngrid)"/>
+          <use href="#nxp" fill="none" stroke="#243044" stroke-width="30" stroke-linejoin="round"/>
+          <use href="#nxp" fill="none" stroke="#0f141d" stroke-width="26" stroke-linejoin="round"/>
+          <use href="#nxp" fill="none" stroke="#e6ebf2" stroke-opacity=".8" stroke-width="1.6"/>
+          <g fill="none" stroke="#8b97a8" stroke-width="1.2"><rect x="152" y="70" width="14" height="14" rx="2"/><rect x="214" y="18" width="12" height="12" rx="2"/></g>
+          <g><animateMotion dur="8s" repeatCount="indefinite" rotate="auto"><mpath href="#nxp"/></animateMotion>
+            <path d="M6 0 L40 -14 L40 14 Z" fill="#22d3ee" fill-opacity=".14"/>
+            <g><line x1="0" y1="0" x2="34" y2="0" stroke="#f59e0b" stroke-opacity=".75" stroke-width="1"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.1s" repeatCount="indefinite"/></g>
+            <rect x="-9" y="-5" width="18" height="10" rx="2.5" fill="#22d3ee"/><rect x="3" y="-3.5" width="4" height="7" fill="#07090d"/>
+          </g>
+          <text x="12" y="170" font-family="JetBrains Mono,monospace" font-size="8" fill="#5b6676">camera edge vectors · 2D LiDAR · 30 Hz</text>
+        </svg><span class="badge">ILLUSTRATION · LINE FOLLOWING</span></div>
         <div class="cat">Competition · ROS 2 / Gazebo</div>
         <h3>NXP Cup autonomous car</h3>
         <p>Simulation-based self-driving car with a Pixy camera and 2D LiDAR. I wrote the main driving node: line following from camera edge vectors, LiDAR obstacle avoidance, and steering and speed control.</p>
@@ -493,6 +599,14 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
 <section id="contact">
   <div class="wrap">
     <div class="contact reveal">
+      <svg class="orbit" viewBox="0 0 340 340" aria-hidden="true">
+        <defs><radialGradient id="planet" cx=".35" cy=".35" r=".8"><stop offset="0" stop-color="#22d3ee" stop-opacity=".55"/><stop offset="1" stop-color="#22d3ee" stop-opacity=".05"/></radialGradient></defs>
+        <circle cx="170" cy="170" r="140" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-dasharray="2 6" style="color:var(--muted)"/>
+        <circle cx="170" cy="170" r="92" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-dasharray="3 5" style="color:var(--muted)"/>
+        <circle cx="170" cy="170" r="44" fill="url(#planet)"/>
+        <g class="sat"><g transform="translate(262 170)"><rect x="-4" y="-4" width="8" height="8" rx="1.5" fill="#f59e0b"/><rect x="-15" y="-2" width="9" height="4" fill="#22d3ee" fill-opacity=".8"/><rect x="6" y="-2" width="9" height="4" fill="#22d3ee" fill-opacity=".8"/></g></g>
+        <g class="sat2"><circle cx="30" cy="170" r="3" fill="#22d3ee"/></g>
+      </svg>
       <div>
         <div class="kicker">// contact</div>
         <h2>Let's build something that moves.</h2>
@@ -596,12 +710,48 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
     const tick = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = (to * e).toFixed(dec); if (p < 1) requestAnimationFrame(tick); };
     requestAnimationFrame(tick);
   };
+  /* kicker text "decodes" when its block appears */
+  const scramble = el => {
+    const final = el.textContent, chars = '!<>-_/[]{}=+*^?#01', total = 24; let f = 0;
+    const tick = () => {
+      const done = f / total * final.length;
+      el.textContent = final.split('').map((c, i) => (c === ' ' || i < done) ? c : chars[Math.random() * chars.length | 0]).join('');
+      if (++f <= total) requestAnimationFrame(tick); else el.textContent = final;
+    };
+    tick();
+  };
+  /* section headings: split into words that slide up */
+  if (!reduce) $$('.head h2, .contact h2').forEach(h => {
+    const text = h.textContent.trim();
+    h.classList.add('split'); h.setAttribute('aria-label', text);
+    h.innerHTML = text.split(/\s+/).map((w, i) => `<span class="w" aria-hidden="true"><span style="--d:${i}">${w.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</span></span>`).join(' ');
+  });
   if (!reduce) {
     const io = new IntersectionObserver(es => es.forEach(e => {
       if (!e.isIntersecting) return;
-      e.target.classList.add('in'); $$('.count', e.target).forEach(countUp); io.unobserve(e.target);
+      e.target.classList.add('in'); $$('.count', e.target).forEach(countUp); $$('.kicker', e.target).forEach(scramble); io.unobserve(e.target);
     }), { threshold: .12 });
     $$('.reveal').forEach(el => io.observe(el));
+    if (!document.hidden) root.classList.add('io');   // background tabs keep the CSS timer as a safety net
+  }
+
+  /* scroll progress bar + experience rail */
+  const prog = $('.progress'), tl = $('.timeline'), rail = $('.rail'), jobs = $$('.job');
+  const onScrollFx = () => {
+    const h = root.scrollHeight - innerHeight;
+    prog.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`;
+    const r = tl.getBoundingClientRect(), mark = innerHeight * .65;
+    rail.style.setProperty('--p', reduce ? 1 : Math.max(0, Math.min(1, (mark - r.top) / r.height)));
+    jobs.forEach(j => j.classList.toggle('lit', reduce || j.getBoundingClientRect().top + 10 < mark));
+  };
+  addEventListener('scroll', onScrollFx, { passive: true }); addEventListener('resize', onScrollFx); onScrollFx();
+
+  /* illustrated SVGs: animate only while on screen; static for reduced motion */
+  const svgs = $$('svg.anim-svg').filter(s => s.pauseAnimations);
+  if (reduce) svgs.forEach(s => s.pauseAnimations());
+  else {
+    const sio = new IntersectionObserver(es => es.forEach(e => e.target[e.isIntersecting ? 'unpauseAnimations' : 'pauseAnimations']()));
+    svgs.forEach(s => sio.observe(s));
   }
   addEventListener('load', () => {
     if (reduce || !window.gsap) return;
