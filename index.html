@@ -508,23 +508,19 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
           <a class="go" href="https://github.com/VyomVyas25/RL_Projects" target="_blank" rel="noopener">Code <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
       </article>
       <article class="card reveal" data-c="rover">
-        <div class="media"><svg class="anim-svg" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: a six-wheeled rover driving over rough terrain, its LiDAR sweeping and an arrow sign detected ahead">
-          <defs><linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07090d"/><stop offset="1" stop-color="#121a26"/></linearGradient>
-            <g id="oterr"><path d="M0 140 Q40 126 80 138 T160 134 T240 142 T320 140 V180 H0 Z" fill="#141c28"/><path d="M0 140 Q40 126 80 138 T160 134 T240 142 T320 140" fill="none" stroke="#f59e0b" stroke-opacity=".55" stroke-width="1.2"/>
-              <circle cx="40" cy="150" r="2" fill="#243044"/><circle cx="150" cy="158" r="3" fill="#243044"/><circle cx="270" cy="152" r="2.4" fill="#243044"/>
-              <line x1="236" y1="141" x2="236" y2="112" stroke="#5b6676" stroke-width="1.6"/><rect x="223" y="100" width="26" height="13" rx="2" fill="#e6ebf2"/><path d="M243 106.5h-14M233 102.5l-4 4 4 4" fill="none" stroke="#07090d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="219" y="96" width="34" height="21" rx="2" fill="none" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"><animate attributeName="opacity" values="1;.25;1" dur="1.4s" repeatCount="indefinite"/></rect>
-              <text x="219" y="92" font-family="JetBrains Mono,monospace" font-size="7" fill="#22d3ee">arrow</text></g></defs>
+        <div class="media"><svg class="anim-svg" id="orion" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: a rocker-bogie rover driving over rough terrain, its wheels following the ground, LiDAR sweeping and an arrow sign detected ahead">
+          <defs><linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07090d"/><stop offset="1" stop-color="#121a26"/></linearGradient></defs>
           <rect width="320" height="180" fill="url(#osky)"/>
           <g fill="#8b97a8"><circle cx="30" cy="22" r=".9"/><circle cx="88" cy="48" r=".7"/><circle cx="140" cy="16" r="1"/><circle cx="205" cy="38" r=".8"/><circle cx="262" cy="20" r="1.1"><animate attributeName="opacity" values="1;.2;1" dur="3s" repeatCount="indefinite"/></circle><circle cx="300" cy="60" r=".7"/><circle cx="58" cy="78" r=".6"/><circle cx="178" cy="70" r=".8"><animate attributeName="opacity" values=".2;1;.2" dur="2.4s" repeatCount="indefinite"/></circle></g>
-          <g><use href="#oterr"/><use href="#oterr" x="320"/><animateTransform attributeName="transform" type="translate" from="0 0" to="-320 0" dur="9s" repeatCount="indefinite"/></g>
-          <g><animateTransform attributeName="transform" type="translate" values="0 0;0 -1.6;0 0;0 1;0 0" dur="1.7s" repeatCount="indefinite"/>
-            <g transform="translate(118 97)"><g><line x1="0" y1="0" x2="70" y2="0" stroke="#22d3ee" stroke-opacity=".55" stroke-width="1"/><animateTransform attributeName="transform" type="rotate" values="-50;20;-50" dur="2.2s" repeatCount="indefinite"/></g></g>
-            <line x1="118" y1="98" x2="118" y2="113" stroke="#8b97a8" stroke-width="1.6"/><circle cx="118" cy="97" r="3" fill="#22d3ee"/>
-            <rect x="78" y="112" width="52" height="13" rx="3" fill="#0f141d" stroke="#22d3ee" stroke-width="1.4"/><rect x="84" y="115" width="14" height="5" rx="1" fill="#22d3ee" fill-opacity=".35"/>
-            <g fill="#0b0f15" stroke="#8b97a8" stroke-width="1.4"><circle cx="84" cy="131" r="6"/><circle cx="104" cy="131" r="6"/><circle cx="124" cy="131" r="6"/></g>
-            <g stroke="#8b97a8" stroke-width="1"><g transform="translate(84 131)"><path d="M-4 0h8M0-4v8"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" additive="sum" repeatCount="indefinite"/></g><g transform="translate(104 131)"><path d="M-4 0h8M0-4v8"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" additive="sum" repeatCount="indefinite"/></g><g transform="translate(124 131)"><path d="M-4 0h8M0-4v8"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" additive="sum" repeatCount="indefinite"/></g></g>
+          <g id="oWorld"><g id="oSigns"></g><path id="oGround" fill="#141c28"/><path id="oRidge" fill="none" stroke="#f59e0b" stroke-opacity=".55" stroke-width="1.2"/><g id="oProps"></g></g>
+          <g stroke="#8b97a8" stroke-width="1.6" stroke-linecap="round"><line class="oleg"/><line class="oleg"/><line class="oleg"/></g>
+          <g id="oBody">
+            <line x1="12" y1="-12" x2="12" y2="-26" stroke="#8b97a8" stroke-width="1.6"/>
+            <g id="oSweep"><line x1="0" y1="0" x2="72" y2="0" stroke="#22d3ee" stroke-opacity=".55" stroke-width="1"/></g>
+            <circle cx="12" cy="-27" r="3" fill="#22d3ee"/>
+            <rect x="-26" y="-12" width="52" height="13" rx="3" fill="#0f141d" stroke="#22d3ee" stroke-width="1.4"/><rect x="-20" y="-9" width="14" height="5" rx="1" fill="#22d3ee" fill-opacity=".35"/>
           </g>
+          <g fill="#0b0f15" stroke="#8b97a8" stroke-width="1.4"><g class="ow"><circle r="6"/><path d="M-4 0h8M0-4v8" stroke-width="1"/></g><g class="ow"><circle r="6"/><path d="M-4 0h8M0-4v8" stroke-width="1"/></g><g class="ow"><circle r="6"/><path d="M-4 0h8M0-4v8" stroke-width="1"/></g></g>
         </svg><span class="badge">ILLUSTRATION · ROVER NAV</span></div>
         <div class="cat">Space robotics · ROS 2</div>
         <h3>ORION all-terrain rover</h3>
@@ -761,6 +757,52 @@ try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.th
       gsap.to('#sim', { yPercent: 18, opacity: .3, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
     }
   });
+
+  /* ORION card: rocker-bogie rover that follows the terrain (ground height is a periodic function, sampled under each wheel) */
+  (() => {
+    const svg = $('#orion'); if (!svg) return;
+    const P = 320, TAU = Math.PI * 2, R = 6, WX = [84, 104, 124], DEG = 180 / Math.PI;
+    const h = x => 140 - 6 * Math.sin(TAU * x / P * 2) - 3.5 * Math.sin(TAU * x / P * 3 + 1.3) - 1.2 * Math.sin(TAU * x / P * 7 + .4);
+    let d = 'M0 ' + h(0).toFixed(1);
+    for (let x = 4; x <= 2 * P; x += 4) d += ' L' + x + ' ' + h(x).toFixed(1);
+    $('#oRidge', svg).setAttribute('d', d); $('#oGround', svg).setAttribute('d', d + ' V180 H0 Z');
+    let props = '', signs = '';
+    for (const k of [0, P]) {
+      for (const [rx, dy, r] of [[40, 10, 2], [150, 18, 3], [270, 12, 2.4], [205, 26, 1.8]]) props += `<circle cx="${rx + k}" cy="${(h(rx) + dy).toFixed(1)}" r="${r}" fill="#243044"/>`;
+      const sx = 236 + k, g = h(236) - 7;                                // planted a little behind the ridge line
+      signs += `<g class="osign" data-x="${sx}"><line x1="${sx}" y1="${g + 12}" x2="${sx}" y2="${g - 24}" stroke="#5b6676" stroke-width="1.4"/>`
+        + `<rect x="${sx - 12}" y="${g - 35}" width="24" height="12" rx="2" fill="#c9d1dc"/>`
+        + `<path d="M${sx + 6.5} ${g - 29}h-13M${sx - 2.5} ${g - 32.8}l-3.8 3.8 3.8 3.8" fill="none" stroke="#07090d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>`
+        + `<g class="obox"><rect x="${sx - 16}" y="${g - 39}" width="32" height="20" rx="2" fill="none" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="4 3"><animate attributeName="opacity" values="1;.3;1" dur="1.4s" repeatCount="indefinite"/></rect>`
+        + `<text x="${sx - 16}" y="${g - 43}" font-family="JetBrains Mono,monospace" font-size="7" fill="#22d3ee">arrow</text></g></g>`;
+    }
+    $('#oProps', svg).innerHTML = props; $('#oSigns', svg).innerHTML = signs;
+    const signEls = $$('.osign', svg).map(el => [+el.dataset.x, el.querySelector('.obox')]);
+    const world = $('#oWorld', svg), body = $('#oBody', svg), sweep = $('#oSweep', svg), wheels = $$('.ow', svg), legs = $$('.oleg', svg);
+    let off = 0, last = 0, run = false;
+    const render = t => {
+      world.setAttribute('transform', `translate(${(-(off % P)).toFixed(2)} 0)`);
+      const ys = WX.map(x => h(x + off) - R);                          // each wheel centre sits on the ground under it
+      const spin = (off / R * DEG) % 360;
+      wheels.forEach((w, i) => w.setAttribute('transform', `translate(${WX[i]} ${ys[i].toFixed(2)}) rotate(${spin.toFixed(1)})`));
+      const pitch = Math.atan2(ys[2] - ys[0], WX[2] - WX[0]), bx = 104, by = (ys[0] + ys[1] + ys[2]) / 3 - 10;
+      body.setAttribute('transform', `translate(${bx} ${by.toFixed(2)}) rotate(${(pitch * DEG).toFixed(2)})`);
+      const c = Math.cos(pitch), s = Math.sin(pitch);
+      legs.forEach((l, i) => {
+        const lx = (i - 1) * 17, ly = 1;                                 // chassis hard-points, rotated with the body
+        l.setAttribute('x1', (bx + lx * c - ly * s).toFixed(2)); l.setAttribute('y1', (by + lx * s + ly * c).toFixed(2));
+        l.setAttribute('x2', WX[i]); l.setAttribute('y2', ys[i].toFixed(2));
+      });
+      sweep.setAttribute('transform', `translate(12 -27) rotate(${(-15 + 35 * Math.sin(t / 700)).toFixed(1)})`);
+      signEls.forEach(([x, box]) => { const sx = x - (off % P); box.style.opacity = (sx > 136 && sx < 300) ? 1 : 0; });
+    };
+    const frame = t => { if (!run) return; off += 34 * Math.min(.05, (t - last) / 1000 || .016); last = t; render(t); requestAnimationFrame(frame); };
+    render(0);
+    if (!reduce) new IntersectionObserver(([e]) => {
+      const was = run; run = e.isIntersecting;
+      if (run && !was) { last = performance.now(); requestAnimationFrame(frame); }
+    }).observe(svg);
+  })();
 
   /* ===== hero simulation: a car tracking a winding road with pure pursuit and a LiDAR sweep ===== */
   const cv = $('#sim'), ctx = cv.getContext('2d');
